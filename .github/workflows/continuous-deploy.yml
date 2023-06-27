@@ -41,6 +41,9 @@ jobs:
       - name: Extract Commit Hash
         run: yarn utils:hash
 
+      - name: Debug
+        run: echo $CF_PAGES_COMMIT_SHA
+
       # - name: Extract Commit Hash
       #   run: |
       #     if [[ "$CURRENT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
