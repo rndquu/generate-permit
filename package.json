@@ -6,6 +6,7 @@
     "start:sign": "tsx ./generate-permit/generate-permit2-url.ts",
     "utils:build": "tsx build.ts",
     "utils:hash": "git rev-parse HEAD > static/commit.txt",
+    "utils:hash:ci": "git rev-parse HEAD~1 > static/commit.txt",
     "build": "run-s utils:hash utils:build",
     "format": "prettier --write ."
   },

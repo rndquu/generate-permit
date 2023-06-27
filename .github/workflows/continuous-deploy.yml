@@ -36,7 +36,15 @@ jobs:
         run: yarn install
         
       - name: Build
-        run: yarn build
+        run: yarn utils:build
+
+      - name: Extract Commit Hash
+        run: |
+          if [[ "$CURRENT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
+            yarn utils:hash
+          else
+            yarn utils:hash:ci
+          fi
 
       - name: Publish to Cloudflare
         run: |
