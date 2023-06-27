@@ -253,7 +253,7 @@ export const pay = async (): Promise<void> => {
     const commitHash = await commit.text();
     const buildElement = document.querySelector(`#build a`) as any;
     buildElement.innerHTML = `${commitHash}`;
-    buildElement.href = `https://github.com/ubiquity/generate-permit/commit/${commitHash}`;
+    buildElement.href = `https://github.com/ubiquity/pay.ubq.fi/commit/${commitHash}`;
   }
   // check system light mode
   const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
