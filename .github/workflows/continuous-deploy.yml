@@ -37,14 +37,17 @@ jobs:
         
       - name: Yarn Install
         run: yarn install
-        
+
       - name: Extract Commit Hash
-        run: |
-          if [[ "$CURRENT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
-            yarn utils:hash
-          else
-            yarn utils:hash:ci
-          fi
+        run: yarn utils:hash
+
+      # - name: Extract Commit Hash
+      #   run: |
+      #     if [[ "$CURRENT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
+      #       yarn utils:hash
+      #     else
+      #       yarn utils:hash:ci
+      #     fi
 
       - name: Build
         run: yarn utils:build
