@@ -35,7 +35,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           REPOSITORY: ${{ github.repository }}
-          PRODUCTION_BRANCH: "development"
+          # TLDR; head_ref=branch_name_on_pr, ref_name=branch_name_on_push
+          # https://stackoverflow.com/questions/58033366/how-to-get-the-current-branch-within-github-actions
+          PRODUCTION_BRANCH: ${{ github.head_ref || github.ref_name }} 
           OUTPUT_DIRECTORY: "static"
         run: |
           IFS='/' read -ra fields <<< "$REPOSITORY"
