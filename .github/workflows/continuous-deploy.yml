@@ -31,7 +31,7 @@ jobs:
         run: yarn install
         
       - name: Build
-        run: yarn utils:build
+        run: yarn build
 
       - name: Publish to Cloudflare
         env:
