@@ -38,6 +38,9 @@ jobs:
       - name: Build
         run: yarn utils:build
 
+      - name: Debug
+        run: echo ${{ github.event.before }}
+
       - name: Extract Commit Hash
         run: |
           if [[ "$CURRENT_BRANCH" == "$PRODUCTION_BRANCH" ]]; then
