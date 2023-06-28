@@ -54,13 +54,13 @@ jobs:
           fi
           echo DEPLOY_URL=$(wrangler pages publish "$OUTPUT_DIRECTORY" --project-name "$projectName" | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*") >> $GITHUB_OUTPUT
 
-        - name: Post deploy URL
-        - uses: actions/github-script@v6
-          with:
-            script: |
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
-              })          
+      - name: Post deploy URL
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
+            })          
