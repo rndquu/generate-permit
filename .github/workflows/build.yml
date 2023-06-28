@@ -29,5 +29,8 @@ jobs:
       - name: Build
         run: yarn utils:build
 
-      - name: Debug
-        run: echo ${{ github.sha }}
+      - name: Archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.sha }}
+          path: static
