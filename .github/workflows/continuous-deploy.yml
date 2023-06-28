@@ -1,7 +1,10 @@
 name: Cloudflare Preview Deployment
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Build"]
+    types:
+      - completed
 
 jobs:
   deploy-to-cloudflare:
@@ -10,6 +13,7 @@ jobs:
     permissions:
       contents: read
 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,12 +25,14 @@ jobs:
 
       - name: Wrangler Install
         run: npm install -g wrangler
-        
-      - name: Yarn Install
-        run: yarn install
-        
-      - name: Build
-        run: yarn utils:build
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.sha }}
+
+      - name: Unzip build artifact
+        run: unzip -o ${{ github.sha }}.zip -d static
 
       - name: Publish to Cloudflare
         env:
