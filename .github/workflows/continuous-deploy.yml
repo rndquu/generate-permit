@@ -27,7 +27,7 @@ jobs:
         run: npm install -g wrangler
 
       - name: Download build artifact
-        uses: actions/download-artifact@v3
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: ${{ github.sha }}
 
