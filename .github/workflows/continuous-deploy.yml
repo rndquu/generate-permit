@@ -31,12 +31,10 @@ jobs:
         with:
           name: pr
           workflow: build.yml
+          path: pr
 
       - name: Debug
         run: ls -la
-
-      # - name: Unzip build artifact
-      #   run: unzip -o pr.zip -d pr
 
       - name: Publish to Cloudflare
         env:
