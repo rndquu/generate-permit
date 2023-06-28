@@ -55,6 +55,7 @@ jobs:
           echo DEPLOY_URL=$(wrangler pages publish "$OUTPUT_DIRECTORY" --project-name "$projectName" | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*") >> $GITHUB_OUTPUT
 
       - name: Post deploy URL
+        if: ${{ github.event_name == 'pull_request' }}
         uses: actions/github-script@v6
         with:
           script: |
