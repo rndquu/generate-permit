@@ -33,15 +33,12 @@ jobs:
           workflow: build.yml
           path: pr
 
-      - name: Debug
-        run: ls -la
-
       - name: Publish to Cloudflare
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           REPOSITORY: ${{ github.repository }}
           PRODUCTION_BRANCH: "development"
-          OUTPUT_DIRECTORY: "static"
+          OUTPUT_DIRECTORY: "pr"
         run: |
           IFS='/' read -ra fields <<< "$REPOSITORY"
           projectName="${fields[1]}"
