@@ -82,6 +82,8 @@ jobs:
         run: echo ${{ steps.pr-num-reader.outputs.content }}
 
       - name: Comment PR
+        # PR number exists only on "pull_request" event so comment only when it exists
+        if: ${{ steps.pr-num-reader.outputs.content != '' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
