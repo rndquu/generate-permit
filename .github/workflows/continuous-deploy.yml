@@ -65,11 +65,24 @@ jobs:
       - name: Print deploy URL
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
 
-      - name: Debug
-        run: echo ${{ steps.source-run-info.outputs.pullRequestNumber }}
-
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
+      - name: Download PR number artifact
+        uses: dawidd6/action-download-artifact@v2
         with:
-          message: |
-            Hello world ! :wave:
+          name: pr-num
+          workflow: build.yml
+          path: pr-num
+
+      - name: Read PR number from file
+        id: pr-num-reader
+        uses: juliangruber/read-file-action@v1.1.6
+        with:
+          path: pr-num/pr-num.txt
+
+      - name: Debug
+        run: echo ${{ steps.pr-num-reader.outputs.content }}
+
+      # - name: Comment PR
+      #   uses: thollander/actions-comment-pull-request@v2
+      #   with:
+      #     message: |
+      #       Hello world ! :wave:
