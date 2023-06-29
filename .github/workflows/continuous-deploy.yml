@@ -21,6 +21,7 @@ jobs:
         id: workflow-run-info
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          sourceRunId: ${{ github.event.workflow_run.id }}
 
       - name: Checkout repository
         uses: actions/checkout@v3
