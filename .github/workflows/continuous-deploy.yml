@@ -78,11 +78,12 @@ jobs:
         with:
           path: pr-num/pr-num.txt
 
-      - name: Debug
+      - name: Print PR number from file
         run: echo ${{ steps.pr-num-reader.outputs.content }}
 
-      # - name: Comment PR
-      #   uses: thollander/actions-comment-pull-request@v2
-      #   with:
-      #     message: |
-      #       Hello world ! :wave:
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
+          pr_number: ${{ steps.pr-num-reader.outputs.content }}
+
