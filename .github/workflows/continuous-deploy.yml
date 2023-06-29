@@ -10,15 +10,25 @@ jobs:
   deploy-to-cloudflare:
     name: Deploy to Cloudflare Pages
     runs-on: ubuntu-22.04
+    outputs:
+      sourceHeadRepo: ${{ steps.source-run-info.outputs.sourceHeadRepo }}
+      sourceHeadBranch: ${{ steps.source-run-info.outputs.sourceHeadBranch }}
+      sourceHeadSha: ${{ steps.source-run-info.outputs.sourceHeadSha }}
+      mergeCommitSha: ${{ steps.source-run-info.outputs.mergeCommitSha }}
+      targetCommitSha: ${{ steps.source-run-info.outputs.targetCommitSha }}
+      pullRequestNumber: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+      pullRequestLabels: ${{ steps.source-run-info.outputs.pullRequestLabels }}
+      targetBranch: ${{ steps.source-run-info.outputs.targetBranch }}
+      sourceEvent: ${{ steps.source-run-info.outputs.sourceEvent }}
     permissions:
       contents: read
       pull-requests: write 
 
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: "Get information about the current run"
+      - name: "Get information about the origin 'CI' run"
         uses: potiuk/get-workflow-origin@v1_1
-        id: workflow-run-info
+        id: source-run-info
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           sourceRunId: ${{ github.event.workflow_run.id }}
@@ -66,7 +76,7 @@ jobs:
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
 
       - name: Debug
-        run: echo ${{ steps.workflow-run-info.outputs.pullRequestNumber }}
+        run: echo ${{ steps.source-run-info.outputs.pullRequestNumber }}
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
