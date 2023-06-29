@@ -56,3 +56,12 @@ jobs:
 
       - name: Print deploy URL
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
+
+      - name: Debug
+        run: echo ${{ github.event.number }}
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Hello world ! :wave:
