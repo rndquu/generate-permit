@@ -16,6 +16,12 @@ jobs:
 
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: "Get information about the current run"
+        uses: potiuk/get-workflow-origin@v1_1
+        id: workflow-run-info
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -59,7 +65,7 @@ jobs:
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
 
       - name: Debug
-        run: echo ${{ github.event.number }}
+        run: echo ${{ steps.workflow-run-info.outputs.pullRequestNumber }}
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
