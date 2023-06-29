@@ -58,13 +58,14 @@ jobs:
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
 
       - name: Post deploy URL
-        if: ${{ github.ref_name != 'development' }}
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}'
-            })          
+            if (context.issue?.number) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}'
+              });
+            }     
