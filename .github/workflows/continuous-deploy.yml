@@ -58,7 +58,7 @@ jobs:
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
 
       - name: Post deploy URL
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.ref_name != 'development' }}
         uses: actions/github-script@v6
         with:
           script: |
