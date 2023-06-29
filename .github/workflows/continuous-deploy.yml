@@ -56,16 +56,3 @@ jobs:
 
       - name: Print deploy URL
         run: echo ${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}
-
-      - name: Post deploy URL
-        uses: actions/github-script@v6
-        with:
-          script: |
-            if (context.issue?.number) {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '${{ steps.publish-to-cloudflare.outputs.DEPLOY_URL }}'
-              });
-            }     
