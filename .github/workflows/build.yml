@@ -36,7 +36,7 @@ jobs:
           path: static
 
       - name: Create a file with PR number
-        run: echo ${{ github.event.number }} > pr-num.txt
+        run: echo -n ${{ github.event.number }} > pr-num.txt
 
       - name: Upload the PR number
         uses: actions/upload-artifact@v2
